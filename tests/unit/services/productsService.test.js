@@ -26,6 +26,15 @@ const mockIdProduct = {
 
 const notFoundByIdProducts = [];
 
+const createdProduct = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 5,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0
+};
+
 describe('Testes da Camada de Services - Products', () => {
   describe('Quando realizar uma busca por todos os produtos', () => {
     describe('Quando os produtos são encontrados', () => {
@@ -82,6 +91,29 @@ describe('Testes da Camada de Services - Products', () => {
       it('O produto encontrado é o correto', async () => {
         const result = await ProductsService.getByPk(1);
         expect(result).to.be.equal(mockIdProduct);
+      });
+    });
+  });
+
+  describe('Quando eu inserir um produto no banco de dados', () => {
+    describe('Quando eu insiro com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(ProductsModel, 'create').resolves(createdProduct);
+      });
+
+      afterEach(async () => {
+        ProductsModel.create.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await ProductsService.create('Teste123');
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows, insertId } = await ProductsService.create('Teste123');
+        expect(affectedRows).not.to.be.equal(0);
+        expect(insertId).not.to.be.equal(0);
       });
     });
   });

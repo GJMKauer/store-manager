@@ -9,13 +9,13 @@ const getAll = async (_req, res) => {
 const getByPk = async (req, res) => {
   const { id } = req.params;
 
-  const [product] = await ProductsService.getByPk(id);
+  const product = await ProductsService.getByPk(id);
 
-  if (product.length === 0) {
+  if (Array.isArray(product)) {
     return res.status(404).json({ message: 'Product not found' });
   }
 
-  return res.status(200).json(product[0]);
+  return res.status(200).json(product);
 };
 
 const create = async (req, res) => {
@@ -23,7 +23,7 @@ const create = async (req, res) => {
 
   const newProduct = await ProductsService.create(name);
 
-  return res.status(201).json({ id: newProduct[0].insertId, name });
+  return res.status(201).json({ id: newProduct.insertId, name });
 };
 
 module.exports = {

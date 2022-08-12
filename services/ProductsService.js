@@ -9,8 +9,6 @@ const getAll = async () => {
 const getByPk = async (id) => {
   const product = await ProductsModel.getByPk(id);
 
-  if (!product) return [[], []];
-
   return product;
 };
 

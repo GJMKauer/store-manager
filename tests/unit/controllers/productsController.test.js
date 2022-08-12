@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const ProductsService = require('../../../services/ProductsService');
 const ProductsController = require('../../../controllers/ProductsController');
 
-const mockAllProducts = [[
+const mockAllProducts = [
   {
     "id": 1,
     "name": "Martelo de Thor"
@@ -17,14 +17,28 @@ const mockAllProducts = [[
     "id": 3,
     "name": "Escudo do Capitão América"
   },
-], []];
+];
 
-const mockIdProduct = [{
+const mockIdProduct = {
   "id": 1,
   "name": "Martelo de Thor"
-}, []];
+};
 
-const notFoundByIdProducts = [[], []];
+const notFoundByIdProducts = [];
+
+const createdProduct = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 5,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0
+};
+
+const createdProductName = {
+  id: 5,
+  name: 'Teste123',
+};
 
 describe('Testes da Camada de Controller - Products', () => {
   describe('Quando realizar uma busca por todos produtos', () => {
@@ -73,7 +87,6 @@ describe('Testes da Camada de Controller - Products', () => {
 
       it('Retorna um status Erro 404', async () => {
         const teste = await ProductsController.getByPk(req, res);
-        console.log('TESTE AQUI', teste);
         expect(res.status.calledWith(404)).to.be.equal(true);
       });
 
@@ -105,8 +118,35 @@ describe('Testes da Camada de Controller - Products', () => {
 
       it('Retorna um produto na função getByPk', async () => {
         await ProductsController.getByPk(req, res);
-        expect(res.json.calledWith(mockIdProduct[0][0])).to.be.equal(true);
+        expect(res.json.calledWith(mockIdProduct)).to.be.equal(true);
       });
     });
-  })
+  });
+
+  describe('Quando eu inserir um produto no banco de dados', () => {
+    describe('Quando eu insiro com sucesso', () => {
+      const req = {};
+      const res = {};
+      beforeEach(async () => {
+        req.body = { name: 'Teste123' };
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+        sinon.stub(ProductsService, 'create').resolves(createdProduct);
+      });
+
+      afterEach(async () => {
+        ProductsService.create.restore();
+      });
+
+      it('Retorna um status 201 Created', async () => {
+        await ProductsController.create(req, res);
+        expect(res.status.calledWith(201)).to.be.equal(true);
+      });
+
+      it('Retorna o produto criado corretamente', async () => {
+        await ProductsController.create(req, res);
+        expect(res.json.calledWith(createdProductName)).to.be.equal(true);
+      });
+    });
+  });
 });
