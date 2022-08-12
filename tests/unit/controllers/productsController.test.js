@@ -3,6 +3,7 @@ const { expect } = require('chai');
 
 const ProductsService = require('../../../services/ProductsService');
 const ProductsController = require('../../../controllers/ProductsController');
+const ProductMiddlewares = require('../../../middlewares/ProductsMiddleware');
 
 const mockAllProducts = [
   {
@@ -86,12 +87,12 @@ describe('Testes da Camada de Controller - Products', () => {
       });
 
       it('Retorna um status Erro 404', async () => {
-        const teste = await ProductsController.getProductByPk(req, res);
+        await ProductMiddlewares.getProductByPkValidations(req, res);
         expect(res.status.calledWith(404)).to.be.equal(true);
       });
 
       it('Uma mensagem é enviada com o texto "Product not found"', async () => {
-        await ProductsController.getProductByPk(req, res);
+        await ProductMiddlewares.getProductByPkValidations(req, res);
         expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
       });
     });
@@ -140,12 +141,12 @@ describe('Testes da Camada de Controller - Products', () => {
         });
 
         it('Retorna um status Error 400', async () => {
-          await ProductsController.createProduct(req, res);
+          await ProductMiddlewares.createProductValidations(req, res);
           expect(res.status.calledWith(400)).to.be.equal(true);
         });
 
         it('Uma mensagem é enviada com o texto ""name" is required"', async () => {
-          await ProductsController.createProduct(req, res);
+          await ProductMiddlewares.createProductValidations(req, res);
           expect(res.json.calledWith({ message: '"name" is required' })).to.be.equal(true);
         });
       });
@@ -165,12 +166,12 @@ describe('Testes da Camada de Controller - Products', () => {
         });
 
         it('Retorna um status Error 400', async () => {
-          await ProductsController.createProduct(req, res);
+          await ProductMiddlewares.createProductValidations(req, res);
           expect(res.status.calledWith(422)).to.be.equal(true);
         });
 
         it('Uma mensagem é enviada com o texto ""name" length must be at least 5 characters long"', async () => {
-          await ProductsController.createProduct(req, res);
+          await ProductMiddlewares.createProductValidations(req, res);
           expect(res.json.calledWith({ message: '"name" length must be at least 5 characters long' })).to.be.equal(true);
         });
       });
