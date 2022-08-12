@@ -1,13 +1,13 @@
 const connection = require('./connection');
 
-const getAll = async () => {
+const getAllProducts = async () => {
   const [products] = await connection.query(`
     SELECT * FROM StoreManager.products
   `);
   return products;
 };
 
-const getByPk = async (id) => {
+const getProductByPk = async (id) => {
   const [[product]] = await connection.query(`
     SELECT * FROM StoreManager.products
     WHERE id = ?
@@ -18,7 +18,7 @@ const getByPk = async (id) => {
   return product;
 };
 
-const create = async (name) => {
+const createProduct = async (name) => {
   const [newProduct] = await connection.query(`
     INSERT INTO StoreManager.products (name)
     VALUES (?)
@@ -28,7 +28,7 @@ const create = async (name) => {
 };
 
 module.exports = {
-  getAll,
-  getByPk,
-  create,
+  getAllProducts,
+  getProductByPk,
+  createProduct,
 };

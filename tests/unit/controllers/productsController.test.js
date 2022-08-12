@@ -50,20 +50,20 @@ describe('Testes da Camada de Controller - Products', () => {
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
 
-        sinon.stub(ProductsService, 'getAll').resolves(mockAllProducts);
+        sinon.stub(ProductsService, 'getAllProducts').resolves(mockAllProducts);
       });
 
       afterEach(async () => {
-        ProductsService.getAll.restore();
+        ProductsService.getAllProducts.restore();
       });
 
       it('Retorna um status OK 200', async () => {
-        await ProductsController.getAll(req, res);
+        await ProductsController.getAllProducts(req, res);
         expect(res.status.calledWith(200)).to.be.equal(true);
       });
 
       it('Retorna um array com todos os produtos', async () => {
-        await ProductsController.getAll(req, res);
+        await ProductsController.getAllProducts(req, res);
         expect(res.json.calledWith(mockAllProducts)).to.be.equal(true);
       });
     });
@@ -78,20 +78,20 @@ describe('Testes da Camada de Controller - Products', () => {
         req.params = { id: 9 };
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
-        sinon.stub(ProductsService, 'getByPk').resolves(notFoundByIdProducts);
+        sinon.stub(ProductsService, 'getProductByPk').resolves(notFoundByIdProducts);
       });
 
       afterEach(async () => {
-        ProductsService.getByPk.restore();
+        ProductsService.getProductByPk.restore();
       });
 
       it('Retorna um status Erro 404', async () => {
-        const teste = await ProductsController.getByPk(req, res);
+        const teste = await ProductsController.getProductByPk(req, res);
         expect(res.status.calledWith(404)).to.be.equal(true);
       });
 
       it('Uma mensagem é enviada com o texto "Product not found"', async () => {
-        await ProductsController.getByPk(req, res);
+        await ProductsController.getProductByPk(req, res);
         expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
       });
     });
@@ -104,20 +104,20 @@ describe('Testes da Camada de Controller - Products', () => {
         req.params = { id: 1 };
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
-        sinon.stub(ProductsService, 'getByPk').resolves(mockIdProduct);
+        sinon.stub(ProductsService, 'getProductByPk').resolves(mockIdProduct);
       });
 
       afterEach(async () => {
-        ProductsService.getByPk.restore();
+        ProductsService.getProductByPk.restore();
       });
 
       it('Retorna um status OK 200', async () => {
-        await ProductsController.getByPk(req, res);
+        await ProductsController.getProductByPk(req, res);
         expect(res.status.calledWith(200)).to.be.equal(true);
       });
 
-      it('Retorna um produto na função getByPk', async () => {
-        await ProductsController.getByPk(req, res);
+      it('Retorna um produto na função getProductByPk', async () => {
+        await ProductsController.getProductByPk(req, res);
         expect(res.json.calledWith(mockIdProduct)).to.be.equal(true);
       });
     });
@@ -131,20 +131,20 @@ describe('Testes da Camada de Controller - Products', () => {
         req.body = { name: 'Teste123' };
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
-        sinon.stub(ProductsService, 'create').resolves(createdProduct);
+        sinon.stub(ProductsService, 'createProduct').resolves(createdProduct);
       });
 
       afterEach(async () => {
-        ProductsService.create.restore();
+        ProductsService.createProduct.restore();
       });
 
       it('Retorna um status 201 Created', async () => {
-        await ProductsController.create(req, res);
+        await ProductsController.createProduct(req, res);
         expect(res.status.calledWith(201)).to.be.equal(true);
       });
 
       it('Retorna o produto criado corretamente', async () => {
-        await ProductsController.create(req, res);
+        await ProductsController.createProduct(req, res);
         expect(res.json.calledWith(createdProductName)).to.be.equal(true);
       });
     });

@@ -39,20 +39,20 @@ describe('Testes da Camada de Services - Products', () => {
   describe('Quando realizar uma busca por todos os produtos', () => {
     describe('Quando os produtos são encontrados', () => {
       beforeEach(async () => {
-        sinon.stub(ProductsModel, 'getAll').resolves(mockAllProducts);
+        sinon.stub(ProductsModel, 'getAllProducts').resolves(mockAllProducts);
       });
 
       afterEach(async () => {
-        ProductsModel.getAll.restore();
+        ProductsModel.getAllProducts.restore();
       });
 
-      it('Retorna um array na função getAll', async () => {
-        const result = await ProductsService.getAll();
+      it('Retorna um array na função getAllProducts', async () => {
+        const result = await ProductsService.getAllProducts();
         expect(result).to.be.an('array');
       });
 
       it('Retorna todos os produtos', async () => {
-        const products = await ProductsService.getAll();
+        const products = await ProductsService.getAllProducts();
         expect(products).to.be.equal(mockAllProducts);
       });
     });
@@ -61,35 +61,35 @@ describe('Testes da Camada de Services - Products', () => {
   describe('Quando realizar uma busca pelo ID', () => {
     describe('Quando os produtos não são encontrados', () => {
       beforeEach(async () => {
-        sinon.stub(ProductsModel, 'getByPk').resolves(notFoundByIdProducts);
+        sinon.stub(ProductsModel, 'getProductByPk').resolves(notFoundByIdProducts);
       });
 
       afterEach(async () => {
-        ProductsModel.getByPk.restore();
+        ProductsModel.getProductByPk.restore();
       });
 
       it('Retorna nulo caso nenhum produto seja encontrado', async () => {
-        const result = await ProductsService.getByPk(9);
+        const result = await ProductsService.getProductByPk(9);
         expect(result).to.be.equal(notFoundByIdProducts);
       });
     });
     
     describe('Quando os produtos são encontrados', () => {
       beforeEach(async () => {
-        sinon.stub(ProductsModel, 'getByPk').resolves(mockIdProduct);
+        sinon.stub(ProductsModel, 'getProductByPk').resolves(mockIdProduct);
       });
 
       afterEach(async () => {
-        ProductsModel.getByPk.restore();
+        ProductsModel.getProductByPk.restore();
       });
 
-      it('Retorna um objeto na função getByPk', async () => {
-        const result = await ProductsService.getByPk(1);
+      it('Retorna um objeto na função getProductByPk', async () => {
+        const result = await ProductsService.getProductByPk(1);
         expect(result).to.be.an('object');
       }); 
 
       it('O produto encontrado é o correto', async () => {
-        const result = await ProductsService.getByPk(1);
+        const result = await ProductsService.getProductByPk(1);
         expect(result).to.be.equal(mockIdProduct);
       });
     });
@@ -98,20 +98,20 @@ describe('Testes da Camada de Services - Products', () => {
   describe('Quando eu inserir um produto no banco de dados', () => {
     describe('Quando eu insiro com sucesso', () => {
       beforeEach(async () => {
-        sinon.stub(ProductsModel, 'create').resolves(createdProduct);
+        sinon.stub(ProductsModel, 'createProduct').resolves(createdProduct);
       });
 
       afterEach(async () => {
-        ProductsModel.create.restore();
+        ProductsModel.createProduct.restore();
       });
 
       it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
-        const result = await ProductsService.create('Teste123');
+        const result = await ProductsService.createProduct('Teste123');
         expect(result).to.include.all.keys('affectedRows', 'insertId');
       });
 
       it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
-        const { affectedRows, insertId } = await ProductsService.create('Teste123');
+        const { affectedRows, insertId } = await ProductsService.createProduct('Teste123');
         expect(affectedRows).not.to.be.equal(0);
         expect(insertId).not.to.be.equal(0);
       });

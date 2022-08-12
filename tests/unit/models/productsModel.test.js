@@ -46,13 +46,13 @@ describe('Testes da Camada de Models - Products', () => {
         connection.query.restore();
       });
 
-      it('Retorna um array na função getAll', async () => {
-        const result = await ProductsModel.getAll();
+      it('Retorna um array na função getAllProducts', async () => {
+        const result = await ProductsModel.getAllProducts();
         expect(result).to.be.an('array');
       });
 
       it('Retorna todos os produtos corretos', async () => {
-        const result = await ProductsModel.getAll();
+        const result = await ProductsModel.getAllProducts();
         expect(result).to.be.equal(mockAllProducts[0]);
       });
     });
@@ -69,7 +69,7 @@ describe('Testes da Camada de Models - Products', () => {
       });
 
       it('Retorna um array de dois array vazios caso nenhum produto seja encontrado', async () => {
-        const result = await ProductsModel.getByPk(9);
+        const result = await ProductsModel.getProductByPk(9);
         expect(result).to.be.deep.equal(notFoundByIdProducts);
       });
     });
@@ -83,18 +83,18 @@ describe('Testes da Camada de Models - Products', () => {
         connection.query.restore();
       });
 
-      it('Retorno um objeto na função getByPk', async () => {
-        const result = await ProductsModel.getByPk(1);
+      it('Retorno um objeto na função getProductByPk', async () => {
+        const result = await ProductsModel.getProductByPk(1);
         expect(result).to.be.an('object');
       });
 
       it('O produto retornado tem as propriedades "id" e "name"', async () => {
-        const result = await ProductsModel.getByPk(1);
+        const result = await ProductsModel.getProductByPk(1);
         expect(result).to.include.all.keys('id', 'name');
       });
 
       it('O produto retornado é o correto', async () => {
-        const result = await ProductsModel.getByPk(1);
+        const result = await ProductsModel.getProductByPk(1);
         expect(result).to.be.equal(mockIdProduct[0][0]);
       });
     });
@@ -111,12 +111,12 @@ describe('Testes da Camada de Models - Products', () => {
       });
 
       it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
-        const result = await ProductsModel.create('Teste123');
+        const result = await ProductsModel.createProduct('Teste123');
         expect(result).to.include.all.keys('affectedRows', 'insertId');
       });
 
       it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
-        const { affectedRows, insertId} = await ProductsModel.create('Teste123');
+        const { affectedRows, insertId} = await ProductsModel.createProduct('Teste123');
         expect(affectedRows).not.to.be.equal(0);
         expect(insertId).not.to.be.equal(0);
       });
