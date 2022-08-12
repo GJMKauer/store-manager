@@ -24,7 +24,7 @@ const mockIdProduct = {
   "name": "Martelo de Thor"
 };
 
-const notFoundByIdProducts = undefined;
+const notFoundByIdProducts = [];
 
 describe('Testes da Camada de Services - Products', () => {
   describe('Quando realizar uma busca por todos os produtos', () => {
@@ -61,7 +61,7 @@ describe('Testes da Camada de Services - Products', () => {
 
       it('Retorna nulo caso nenhum produto seja encontrado', async () => {
         const result = await ProductsService.getByPk(9);
-        expect(result).to.be.null;
+        expect(result).to.be.equal(notFoundByIdProducts);
       });
     });
     

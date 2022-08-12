@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const ProductsService = require('../../../services/ProductsService');
 const ProductsController = require('../../../controllers/ProductsController');
 
-const mockAllProducts = [
+const mockAllProducts = [[
   {
     "id": 1,
     "name": "Martelo de Thor"
@@ -16,13 +16,15 @@ const mockAllProducts = [
   {
     "id": 3,
     "name": "Escudo do Capitão América"
-  }
-];
+  },
+], []];
 
-const mockIdProduct = {
+const mockIdProduct = [{
   "id": 1,
   "name": "Martelo de Thor"
-};
+}, []];
+
+const notFoundByIdProducts = [[], []];
 
 describe('Testes da Camada de Controller - Products', () => {
   describe('Quando realizar uma busca por todos produtos', () => {
@@ -62,7 +64,7 @@ describe('Testes da Camada de Controller - Products', () => {
         req.params = { id: 9 };
         res.status = sinon.stub().returns(res);
         res.json = sinon.stub().returns();
-        sinon.stub(ProductsService, 'getByPk').resolves(false);
+        sinon.stub(ProductsService, 'getByPk').resolves(notFoundByIdProducts);
       });
 
       afterEach(async () => {
@@ -70,7 +72,8 @@ describe('Testes da Camada de Controller - Products', () => {
       });
 
       it('Retorna um status Erro 404', async () => {
-        await ProductsController.getByPk(req, res);
+        const teste = await ProductsController.getByPk(req, res);
+        console.log('TESTE AQUI', teste);
         expect(res.status.calledWith(404)).to.be.equal(true);
       });
 
@@ -102,7 +105,7 @@ describe('Testes da Camada de Controller - Products', () => {
 
       it('Retorna um produto na função getByPk', async () => {
         await ProductsController.getByPk(req, res);
-        expect(res.json.calledWith(mockIdProduct)).to.be.equal(true);
+        expect(res.json.calledWith(mockIdProduct[0][0])).to.be.equal(true);
       });
     });
   })

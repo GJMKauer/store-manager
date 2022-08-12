@@ -39,12 +39,12 @@ describe('Testes da Camada de Models - Products', () => {
 
       it('Retorna um array na função getAll', async () => {
         const result = await ProductsModel.getAll();
-        expect(result[0]).to.be.an('array');
+        expect(result).to.be.an('array');
       });
 
       it('Retorna todos os produtos corretos', async () => {
         const result = await ProductsModel.getAll();
-        expect(result).to.be.equal(mockAllProducts);
+        expect(result).to.be.equal(mockAllProducts[0]);
       });
     });
   });
@@ -74,7 +74,7 @@ describe('Testes da Camada de Models - Products', () => {
         connection.query.restore();
       });
 
-      it('Retorna um objeto na função getByPk', async () => {
+      it('Retorna um array na função getByPk', async () => {
         const result = await ProductsModel.getByPk(1);
         expect(result).to.be.an('array');
       });
@@ -86,7 +86,7 @@ describe('Testes da Camada de Models - Products', () => {
 
       it('O produto retornado é o correto', async () => {
         const result = await ProductsModel.getByPk(1);
-        expect(result).to.be.equal(mockIdProduct);
+        expect(result[0]).to.be.equal(mockIdProduct[0]);
       });
     });
   }); 

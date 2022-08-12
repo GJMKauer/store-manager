@@ -13,10 +13,16 @@ const getByPk = async (id) => {
     WHERE id = ?
   `, [id]);
 
-  return product[0][0];
+  return product;
 };
+
+const create = async (name) => connection.query(`
+    INSERT INTO StoreManager.products (name)
+    VALUES (?)
+  `, [name]);
 
 module.exports = {
   getAll,
   getByPk,
+  create,
 };

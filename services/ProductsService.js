@@ -9,12 +9,15 @@ const getAll = async () => {
 const getByPk = async (id) => {
   const product = await ProductsModel.getByPk(id);
 
-  if (!product) return null;
+  if (!product) return [[], []];
 
   return product;
 };
 
+const create = async (name) => ProductsModel.create(name);
+
 module.exports = {
   getAll,
   getByPk,
+  create,
 };
