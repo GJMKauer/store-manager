@@ -124,6 +124,59 @@ describe('Testes da Camada de Controller - Products', () => {
   });
 
   describe('Quando eu inserir um produto no banco de dados', () => {
+    describe('Quando eu insiro um dado inválido', () => {
+      describe('Quando eu não insiro um nome', () => {
+        const req = {};
+        const res = {};
+        beforeEach(async () => {
+          req.body = { name: '' };
+          res.status = sinon.stub().returns(res);
+          res.json = sinon.stub().returns();
+          sinon.stub(ProductsService, 'createProduct').resolves(createdProduct);
+        });
+
+        afterEach(async () => {
+          ProductsService.createProduct.restore();
+        });
+
+        it('Retorna um status Error 400', async () => {
+          await ProductsController.createProduct(req, res);
+          expect(res.status.calledWith(400)).to.be.equal(true);
+        });
+
+        it('Uma mensagem é enviada com o texto ""name" is required"', async () => {
+          await ProductsController.createProduct(req, res);
+          expect(res.json.calledWith({ message: '"name" is required' })).to.be.equal(true);
+        });
+      });
+
+      describe('Quando eu insiro um nome pequeno', () => {
+        const req = {};
+        const res = {};
+        beforeEach(async () => {
+          req.body = { name: 'Tes' };
+          res.status = sinon.stub().returns(res);
+          res.json = sinon.stub().returns();
+          sinon.stub(ProductsService, 'createProduct').resolves(createdProduct);
+        });
+
+        afterEach(async () => {
+          ProductsService.createProduct.restore();
+        });
+
+        it('Retorna um status Error 400', async () => {
+          await ProductsController.createProduct(req, res);
+          expect(res.status.calledWith(422)).to.be.equal(true);
+        });
+
+        it('Uma mensagem é enviada com o texto ""name" length must be at least 5 characters long"', async () => {
+          await ProductsController.createProduct(req, res);
+          expect(res.json.calledWith({ message: '"name" length must be at least 5 characters long' })).to.be.equal(true);
+        });
+      });
+      
+    });
+
     describe('Quando eu insiro com sucesso', () => {
       const req = {};
       const res = {};
