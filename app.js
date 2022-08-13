@@ -6,7 +6,7 @@ const SalesController = require('./controllers/SalesController');
 const {
   getProductByPkValidations,
   createProductValidations } = require('./middlewares/ProductsMiddleware');
-const { productIdValidations, quantityValidations } = require('./middlewares/SalesMiddleware');
+const { productIdValidations, quantityValidations, saleValidations } = require('./middlewares/SalesMiddleware');
 
 const app = express();
 
@@ -22,6 +22,10 @@ app.get('/products', ProductsController.getAllProducts);
 app.get('/products/:id', getProductByPkValidations, ProductsController.getProductByPk);
 
 app.post('/products', createProductValidations, ProductsController.createProduct);
+
+app.get('/sales', SalesController.getAllSales);
+
+app.get('/sales/:id', saleValidations, SalesController.getSaleByPk);
 
 app.post('/sales', productIdValidations, quantityValidations, SalesController.createSale);
 

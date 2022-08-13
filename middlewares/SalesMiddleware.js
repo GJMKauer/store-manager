@@ -1,4 +1,5 @@
 const ProductsModel = require('../models/ProductsModel');
+const SalesService = require('../services/SalesService');
 
 const productIdValidations = async (req, res, next) => {
   const salesList = req.body;
@@ -39,7 +40,20 @@ const quantityValidations = async (req, res, next) => {
   next();
 };
 
+const saleValidations = async (req, res, next) => {
+  const { id } = req.params;
+
+  const sale = await SalesService.getSaleByPk(id);
+
+  if (!sale.length) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
+
+  next();
+};
+
 module.exports = {
   productIdValidations,
   quantityValidations,
+  saleValidations,
 };
