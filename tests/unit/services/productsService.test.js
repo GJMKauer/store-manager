@@ -95,7 +95,7 @@ describe('Testes da Camada de Services - Products', () => {
     });
   });
 
-  describe('Quando eu inserir um produto no banco de dados', () => {
+  describe('Ao inserir um produto no banco de dados', () => {
     describe('Quando eu insiro com sucesso', () => {
       beforeEach(async () => {
         sinon.stub(ProductsModel, 'createProduct').resolves(createdProduct);

@@ -124,7 +124,7 @@ describe('Testes da Camada de Controller - Products', () => {
     });
   });
 
-  describe('Quando eu inserir um produto no banco de dados', () => {
+  describe('Ao inserir um produto no banco de dados', () => {
     describe('Quando eu insiro um dado inválido', () => {
       describe('Quando eu não insiro um nome', () => {
         const req = {};
