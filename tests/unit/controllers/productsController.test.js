@@ -129,10 +129,12 @@ describe('Testes da Camada de Controller - Products', () => {
       describe('Quando eu não insiro um nome', () => {
         const req = {};
         const res = {};
+
         beforeEach(async () => {
           req.body = { name: '' };
           res.status = sinon.stub().returns(res);
           res.json = sinon.stub().returns();
+          
           sinon.stub(ProductsService, 'createProduct').resolves(createdProduct);
         });
 
