@@ -16,6 +16,42 @@ const salesList = [
   },
 ];
 
+const mockAllSales = [
+  {
+    "saleId": 1,
+    "productId": 1,
+    "quantity": 5,
+    "date": "2022-08-14T01:01:36.000Z"
+  },
+  {
+    "saleId": 1,
+    "productId": 2,
+    "quantity": 10,
+    "date": "2022-08-14T01:01:36.000Z"
+  },
+  {
+    "saleId": 2,
+    "productId": 3,
+    "quantity": 15,
+    "date": "2022-08-14T01:01:36.000Z"
+  }
+];
+
+const mockSaleById = [
+  {
+    "productId": 1,
+    "quantity": 5,
+    "date": "2022-08-14T01:01:36.000Z"
+  },
+  {
+    "productId": 2,
+    "quantity": 10,
+    "date": "2022-08-14T01:01:36.000Z"
+  }
+];
+
+const notFoundByIdSales = [];
+
 const mockNewSaleProduct = {
   fieldCount: 0,
   affectedRows: 1,
@@ -31,6 +67,88 @@ const mockSalesControllerReturn = {
 };
 
 describe('Testes da Camada de Services - Sales', () => {
+  describe('Quando realizar uma busca por todas as vendas', () => {
+    describe('Quando a venda é encontrada', () => {
+      const req = {};
+      const res = {};
+
+      beforeEach(async () => {
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+
+        sinon.stub(SalesService, 'getAllSales').resolves(mockAllSales);
+      });
+
+      afterEach(async () => {
+        SalesService.getAllSales.restore();
+      });
+
+      it('Retorna um status OK 200', async () => {
+        await SalesController.getAllSales(req, res);
+        expect(res.status.calledWith(200)).to.be.equal(true);
+      });
+
+      it('Retorna um array com todos os produtos', async () => {
+        await SalesController.getAllSales(req, res);
+        expect(res.json.calledWith(mockAllSales)).to.be.equal(true);
+      });
+    });
+  });
+
+  describe('Quando realizar uma busca pelo ID', () => {
+    describe('Quando a venda não é encontrada', () => {
+      const req = {};
+      const res = {};
+
+      beforeEach(async () => {
+        req.params = { id: 9 };
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+        sinon.stub(SalesService, 'getSaleByPk').resolves(notFoundByIdSales);
+      });
+
+      afterEach(async () => {
+        SalesService.getSaleByPk.restore();
+      });
+
+      it('Retorna um status Erro 404', async () => {
+        await SalesMiddleware.saleValidations(req, res);
+        expect(res.status.calledWith(404)).to.be.equal(true);
+      });
+
+      it('Uma mensagem é enviada com o texto "Sale not found"', async () => {
+        await SalesMiddleware.saleValidations(req, res);
+        expect(res.json.calledWith({ message: 'Sale not found' })).to.be.equal(true);
+      });
+    });
+
+    describe('Quando a venda é encontrada', () => {
+      const req = {};
+      const res = {};
+
+      beforeEach(async () => {
+        req.params = { id: 1 };
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+        sinon.stub(SalesService, 'getSaleByPk').resolves(mockSaleById);
+      });
+
+      afterEach(async () => {
+        SalesService.getSaleByPk.restore();
+      });
+
+      it('Retorna um status OK 200', async () => {
+        await SalesController.getSaleByPk(req, res);
+        expect(res.status.calledWith(200)).to.be.equal(true);
+      });
+
+      it('Retorna uma venda na função getSaleByPk', async () => {
+        await SalesController.getSaleByPk(req, res);
+        expect(res.json.calledWith(mockSaleById)).to.be.equal(true);
+      });
+    });
+  });
+
   describe('Ao inserir uma venda no banco de dados', () => {
     describe('Quando eu insiro um dado inválido', () => {
       describe('Quando eu não passo o productId', () => {

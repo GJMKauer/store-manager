@@ -51,7 +51,7 @@ describe('Testes da Camada de Models - Products', () => {
         expect(result).to.be.an('array');
       });
 
-      it('Retorna todos os produtos corretos', async () => {
+      it('Retorna todos os produtos corretamente', async () => {
         const result = await ProductsModel.getAllProducts();
         expect(result).to.be.equal(mockAllProducts[0]);
       });
@@ -59,7 +59,7 @@ describe('Testes da Camada de Models - Products', () => {
   });
 
   describe('Quando realizar uma busca pelo ID', () => {
-    describe('Quando os produtos não são encontrados', () => {
+    describe('Quando o produto não é encontrado', () => {
       beforeEach(async () => {
         sinon.stub(connection, 'query').resolves(notFoundByIdProducts);
       });
@@ -74,7 +74,7 @@ describe('Testes da Camada de Models - Products', () => {
       });
     });
 
-    describe('Quando os produtos são encontrados', () => {
+    describe('Quando o produto é encontrado', () => {
       beforeEach(async () => {
         sinon.stub(connection, 'query').resolves(mockIdProduct);
       });
@@ -83,7 +83,7 @@ describe('Testes da Camada de Models - Products', () => {
         connection.query.restore();
       });
 
-      it('Retorno um objeto na função getProductByPk', async () => {
+      it('Retorna um objeto na função getProductByPk', async () => {
         const result = await ProductsModel.getProductByPk(1);
         expect(result).to.be.an('object');
       });

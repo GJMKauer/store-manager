@@ -2,6 +2,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 
 const SalesService = require('../../../services/SalesService');
+const SalesModel = require('../../../models/SalesModel');
 const SalesProductsModel = require('../../../models/SalesProductsModel');
 
 const salesList = [
@@ -15,6 +16,42 @@ const salesList = [
   },
 ];
 
+const mockAllSales = [
+  {
+    "saleId": 1,
+    "productId": 1,
+    "quantity": 5,
+    "date": "2022-08-14T01:01:36.000Z"
+  },
+  {
+    "saleId": 1,
+    "productId": 2,
+    "quantity": 10,
+    "date": "2022-08-14T01:01:36.000Z"
+  },
+  {
+    "saleId": 2,
+    "productId": 3,
+    "quantity": 15,
+    "date": "2022-08-14T01:01:36.000Z"
+  }
+];
+
+const mockSaleById = [
+  {
+    "productId": 1,
+    "quantity": 5,
+    "date": "2022-08-14T01:01:36.000Z"
+  },
+  {
+    "productId": 2,
+    "quantity": 10,
+    "date": "2022-08-14T01:01:36.000Z"
+  }
+];
+
+const notFoundByIdSales = [];
+
 const mockNewSaleProduct = {
   fieldCount: 0,
   affectedRows: 1,
@@ -25,6 +62,65 @@ const mockNewSaleProduct = {
 };
 
 describe('Testes da Camada de Services - Sales', () => {
+  describe('Quando realizar uma busca por todas as vendas', () => {
+    describe('Quando as vendas são encontradas', () => {
+      beforeEach(async () => {
+        sinon.stub(SalesModel, 'getAllSales').resolves(mockAllSales);
+      });
+
+      afterEach(async () => {
+        SalesModel.getAllSales.restore();
+      });
+
+      it('Retorna um array na função getAllSales', async () => {
+        const result = await SalesService.getAllSales();
+        expect(result).to.be.an('array');
+      });
+
+      it('Retorna todas as vendas', async () => {
+        const result = await SalesService.getAllSales();
+        expect(result).to.be.equal(mockAllSales);
+      });
+    });
+  });
+
+  describe('Quando realizar uma busca pelo ID', () => {
+    describe('Quando a venda não é encontrada', () => {
+      beforeEach(async () => {
+        sinon.stub(SalesModel, 'getSaleByPk').resolves(notFoundByIdSales);
+      });
+
+      afterEach(async () => {
+        SalesModel.getSaleByPk.restore();
+      });
+
+      it('Retorna um array vazio caso nenhuma venda seja encontrada', async () => {
+        const result = await SalesService.getSaleByPk(9);
+        expect(result).to.be.equal(notFoundByIdSales);
+      });
+    });
+
+    describe('Quando a venda é encontrada', () => {
+      beforeEach(async () => {
+        sinon.stub(SalesModel, 'getSaleByPk').resolves(mockSaleById);
+      });
+
+      afterEach(async () => {
+        SalesModel.getSaleByPk.restore();
+      });
+
+      it('Retorna um array na função getSaleByPk', async () => {
+        const result = await SalesService.getSaleByPk(1);
+        expect(result).to.be.an('array');
+      });
+
+      it('A venda encontrada é o correta', async () => {
+        const result = await SalesService.getSaleByPk(1);
+        expect(result).to.be.equal(mockSaleById);
+      });
+    });
+  });
+  
   describe('Ao inserir uma venda no banco de dados', () => {
     describe('Quando eu insiro com sucesso', () => {
       beforeEach(async () => {
