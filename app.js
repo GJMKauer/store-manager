@@ -27,6 +27,11 @@ app.get('/products/:id', getProductByPkValidations, ProductsController.getProduc
 
 app.post('/products', createProductValidations, ProductsController.createProduct);
 
+app.put('/products/:id',
+  getProductByPkValidations, createProductValidations, ProductsController.updateProduct);
+
+app.delete('/products/:id', getProductByPkValidations, ProductsController.deleteProduct);
+
 app.get('/sales', SalesController.getAllSales);
 
 app.get('/sales/:id', saleValidations, SalesController.getSaleByPk);
