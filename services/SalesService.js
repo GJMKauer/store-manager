@@ -7,8 +7,11 @@ const getAllSales = async () => SalesModel.getAllSales();
 
 const getSaleByPk = async (id) => SalesModel.getSaleByPk(id);
 
+const deleteSale = async (id) => SalesModel.deleteSale(id);
+
 module.exports = {
   createSale,
   getAllSales,
   getSaleByPk,
+  deleteSale,
 };
