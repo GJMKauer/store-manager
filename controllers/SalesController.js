@@ -11,7 +11,7 @@ const createSale = async (req, res) => {
 const getAllSales = async (_req, res) => {
   const sales = await SalesService.getAllSales();
 
-  res.status(200).json(sales);
+  return res.status(200).json(sales);
 };
 
 const getSaleByPk = async (req, res) => {
@@ -19,7 +19,7 @@ const getSaleByPk = async (req, res) => {
 
   const sale = await SalesService.getSaleByPk(id);
 
-  res.status(200).json(sale);
+  return res.status(200).json(sale);
 };
 
 const deleteSale = async (req, res) => {
@@ -27,7 +27,16 @@ const deleteSale = async (req, res) => {
 
   await SalesService.deleteSale(id);
 
-  res.status(204).send();
+  return res.status(204).send();
+};
+
+const updateSale = async (req, res) => {
+  const { id } = req.params;
+  const salesList = req.body;
+
+  await SalesService.updateSale(id, salesList);
+
+  return res.status(200).json({ saleId: id, itemsUpdated: salesList });
 };
 
 module.exports = {
@@ -35,4 +44,5 @@ module.exports = {
   getAllSales,
   getSaleByPk,
   deleteSale,
+  updateSale,
 };

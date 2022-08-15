@@ -38,6 +38,9 @@ app.get('/sales/:id', saleValidations, SalesController.getSaleByPk);
 
 app.post('/sales', productIdValidations, quantityValidations, SalesController.createSale);
 
+app.put('/sales/:id',
+  productIdValidations, quantityValidations, saleValidations, SalesController.updateSale);
+
 app.delete('/sales/:id', saleValidations, SalesController.deleteSale);
 
 // não remova essa exportação, é para o avaliador funcionar

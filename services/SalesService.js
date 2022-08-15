@@ -9,9 +9,12 @@ const getSaleByPk = async (id) => SalesModel.getSaleByPk(id);
 
 const deleteSale = async (id) => SalesModel.deleteSale(id);
 
+const updateSale = async (id, salesList) => SalesProductsModel.updateSaleProduct(id, salesList);
+
 module.exports = {
   createSale,
   getAllSales,
   getSaleByPk,
   deleteSale,
+  updateSale,
 };
