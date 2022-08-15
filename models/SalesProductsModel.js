@@ -25,6 +25,8 @@ const updateSaleProduct = async (id, sales) => {
       WHERE sale_id = ? AND product_id = ?
     `, [quantity, id, productId]);
   }));
+
+  return sales;
 };
 
 module.exports = {

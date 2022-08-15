@@ -142,4 +142,48 @@ describe('Testes da Camada de Services - Sales', () => {
       });
     });
   });
+
+  describe('Ao deletar uma venda no banco de dados', () => {
+    describe('Quando eu insiro com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(SalesModel, 'deleteSale').resolves(mockNewSaleProduct);
+      });
+
+      afterEach(async () => {
+        SalesModel.deleteSale.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await SalesService.deleteSale(salesList);
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows } = await SalesService.deleteSale(salesList);
+        expect(affectedRows).not.to.be.equal(0);
+      });
+    });
+  });
+
+  describe('Ao atualizar uma venda no banco de dados', () => {
+    describe('Quando eu insiro com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(SalesProductsModel, 'updateSaleProduct').resolves(mockNewSaleProduct);
+      });
+
+      afterEach(async () => {
+        SalesProductsModel.updateSaleProduct.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await SalesService.updateSale(salesList);
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows } = await SalesService.updateSale(salesList);
+        expect(affectedRows).not.to.be.equal(0);
+      });
+    });
+  });
 });

@@ -44,4 +44,29 @@ describe('Testes da Camada de Models - SalesProducts', () => {
       expect(affectedRows).not.to.be.equal(0);
     });
   });
+
+  describe('Ao atualizar uma venda no banco de dados', () => {
+    beforeEach(async () => {
+      sinon.stub(connection, 'query').resolves(mockNewSaleProduct);
+    });
+
+    afterEach(async () => {
+      connection.query.restore();
+    });
+
+    it('Retorna um array de objetos com os valores atualizados', async () => {
+      const result = await SalesProductsModel.updateSaleProduct(1, salesList);
+      expect(result[0]).to.include.all.keys('productId', 'quantity');
+      expect(result[0].productId).to.be.equal(1);
+      expect(result[0].quantity).to.be.equal(1);
+      expect(result[1].productId).to.be.equal(2);
+      expect(result[1].quantity).to.be.equal(50);
+    });
+
+    it('Espera que as chave "productId" e "quantity" não sejam iguais a 0', async () => {
+      const { productId, quantity } = await SalesProductsModel.updateSaleProduct(1, salesList);
+      expect(productId).not.to.be.equal(0);
+      expect(quantity).not.to.be.equal(0);
+    });
+  });
 });
