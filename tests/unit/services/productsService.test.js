@@ -35,6 +35,16 @@ const createdProduct = {
   warningStatus: 0
 };
 
+const updatedProduct = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 0,
+  info: 'Rows matched: 1  Changed: 1  Warnings: 0',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 1
+};
+
 describe('Testes da Camada de Services - Products', () => {
   describe('Quando realizar uma busca por todos os produtos', () => {
     describe('Quando os produtos são encontrados', () => {
@@ -114,6 +124,50 @@ describe('Testes da Camada de Services - Products', () => {
         const { affectedRows, insertId } = await ProductsService.createProduct('Teste123');
         expect(affectedRows).not.to.be.equal(0);
         expect(insertId).not.to.be.equal(0);
+      });
+    });
+  });
+
+  describe('Ao atualizar um produto no banco de dados', () => {
+    describe('Quando eu atualizo com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(ProductsModel, 'updateProduct').resolves(updatedProduct);
+      });
+
+      afterEach(async () => {
+        ProductsModel.updateProduct.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await ProductsService.updateProduct(1, 'Teste123');
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows } = await ProductsService.updateProduct(1, 'Teste123');
+        expect(affectedRows).not.to.be.equal(0);
+      });
+    });
+  });
+
+  describe('Ao deletar um produto no banco de dados', () => {
+    describe('Quando eu deleto com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(ProductsModel, 'deleteProduct').resolves(updatedProduct);
+      });
+
+      afterEach(async () => {
+        ProductsModel.deleteProduct.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await ProductsService.deleteProduct(1);
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows } = await ProductsService.deleteProduct(1);
+        expect(affectedRows).not.to.be.equal(0);
       });
     });
   });

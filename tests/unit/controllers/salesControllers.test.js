@@ -66,7 +66,7 @@ const mockSalesControllerReturn = {
   itemsSold: salesList,
 };
 
-describe('Testes da Camada de Services - Sales', () => {
+describe('Testes da Camada de Controller - Sales', () => {
   describe('Quando realizar uma busca por todas as vendas', () => {
     describe('Quando a venda é encontrada', () => {
       const req = {};

@@ -122,4 +122,50 @@ describe('Testes da Camada de Models - Products', () => {
       });
     });
   });
+
+  describe('Ao atualizar um produto no banco de dados', () => {
+    describe('Quando eu atualizo com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(connection, 'query').resolves(createdProduct);
+      });
+
+      afterEach(async () => {
+        connection.query.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await ProductsModel.updateProduct('Teste123');
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows, insertId } = await ProductsModel.updateProduct('Teste123');
+        expect(affectedRows).not.to.be.equal(0);
+        expect(insertId).not.to.be.equal(0);
+      });
+    });
+  });
+
+  describe('Ao deletar um produto no banco de dados', () => {
+    describe('Quando eu deleto com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(connection, 'query').resolves(createdProduct);
+      });
+
+      afterEach(async () => {
+        connection.query.restore();
+      });
+
+      it('Retorna um objeto com as keys "affectedRows" e "insertId"', async () => {
+        const result = await ProductsModel.deleteProduct('Teste123');
+        expect(result).to.include.all.keys('affectedRows', 'insertId');
+      });
+
+      it('Espera que as chaves "affectedRows" e "insertId" não sejam iguais a 0', async () => {
+        const { affectedRows, insertId } = await ProductsModel.deleteProduct('Teste123');
+        expect(affectedRows).not.to.be.equal(0);
+        expect(insertId).not.to.be.equal(0);
+      });
+    });
+  });
 });
