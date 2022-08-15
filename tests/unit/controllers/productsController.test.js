@@ -343,4 +343,32 @@ describe('Testes da Camada de Controller - Products', () => {
       });
     });
   });
+
+  describe('Ao procurar um produto no banco de dados pelo nome', () => {
+      describe('Quando o produto é encontrado', () => {
+      const req = {};
+      const res = {};
+
+      beforeEach(async () => {
+        req.query = 'Martelo';
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns();
+        sinon.stub(ProductsService, 'searchProduct').resolves(mockIdProduct);
+      });
+
+      afterEach(async () => {
+        ProductsService.searchProduct.restore();
+      });
+
+      it('Retorna um status OK 200', async () => {
+        await ProductsController.searchProduct(req, res);
+        expect(res.status.calledWith(200)).to.be.equal(true);
+      });
+
+      it('Retorna um produto na função searchProduct', async () => {
+        await ProductsController.searchProduct(req, res);
+        expect(res.json.calledWith(mockIdProduct)).to.be.equal(true);
+      });
+    });
+  });
 });

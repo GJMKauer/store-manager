@@ -171,4 +171,26 @@ describe('Testes da Camada de Services - Products', () => {
       });
     });
   });
+
+  describe('Ao pesquisar um produto no banco de dados pelo nome', () => {
+      describe('Quando o produto é encontrado', () => {
+      beforeEach(async () => {
+        sinon.stub(ProductsModel, 'searchProduct').resolves(mockIdProduct);
+      });
+
+      afterEach(async () => {
+        ProductsModel.searchProduct.restore();
+      });
+
+      it('Retorna um objeto na função searchProduct', async () => {
+        const result = await ProductsService.searchProduct('Martelo');
+        expect(result).to.be.an('object');
+      });
+
+      it('O produto encontrado é o correto', async () => {
+        const result = await ProductsService.searchProduct('Martelo');
+        expect(result).to.be.equal(mockIdProduct);
+      });
+    });
+  });
 });

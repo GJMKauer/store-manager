@@ -168,4 +168,31 @@ describe('Testes da Camada de Models - Products', () => {
       });
     });
   });
+
+  describe('Ao pesquisar um produto no banco de dados através do nome', () => {
+    describe('Quando eu pesquiso com sucesso', () => {
+      beforeEach(async () => {
+        sinon.stub(connection, 'query').resolves(mockIdProduct);
+      });
+
+      afterEach(async () => {
+        connection.query.restore();
+      });
+
+      it('Retorna um objeto na função searchProduct', async () => {
+        const result = await ProductsModel.searchProduct('Martelo');
+        expect(result).to.be.an('array');
+      });
+
+      it('O produto retornado tem as propriedades "id" e "name"', async () => {
+        const result = await ProductsModel.searchProduct('Martelo');
+        expect(result[0]).to.include.all.keys('id', 'name');
+      });
+
+      it('O produto retornado é o correto', async () => {
+        const result = await ProductsModel.searchProduct('Martelo');
+        expect(result[0]).to.be.equal(mockIdProduct[0][0]);
+      });
+    });
+  });
 });
