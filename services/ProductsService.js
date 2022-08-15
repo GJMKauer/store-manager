@@ -10,10 +10,13 @@ const updateProduct = async (id, name) => ProductsModel.updateProduct(id, name);
 
 const deleteProduct = async (id) => ProductsModel.deleteProduct(id);
 
+const searchProduct = async (query) => ProductsModel.searchProduct(query);
+
 module.exports = {
   getAllProducts,
   getProductByPk,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };
