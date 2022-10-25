@@ -325,7 +325,7 @@ A rota retorna o status 204, <code>sem resposta</code>.
   <summary>A requisição irá falhar nos seguintes casos:</summary>
   - A rota retorna o código <code>400</code>, com a mensagem <code>"productId" is required</code> caso algum dos itens na lista de vendas não possua o campo productId no body da requisição;<br>
   - A rota retorna o código <code>400</code>, com a mensagem <code>"quantity" is required</code> caso algum dos itens na lista de vendas não possua o campo quantity no body da requisição;<br>
-  - A rota retorna o código <code>400</code>, com a mensagem <code>"quantity" must be greater than or equal to 1</code> caso algum dos itens na lista de vendas possua o campo quantity com valor abaixo de 1 no body da requisição;<br>
+  - A rota retorna o código <code>422</code>, com a mensagem <code>"quantity" must be greater than or equal to 1</code> caso algum dos itens na lista de vendas possua o campo quantity com valor abaixo de 1 no body da requisição;<br>
   - A rota retorna o código <code>404</code>, com a mensagem <code>Product not found</code> caso tente acessar um id não existente no banco.<br>
 </details>
 <br>
