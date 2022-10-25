@@ -67,7 +67,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
 
-```
+```json
 [
   {
     "id": 1,
@@ -95,7 +95,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
 
-```
+```json
 {
   "id": 1,
   "name": "Martelo de Thor"
@@ -118,7 +118,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A estrutura do <code>body</code> da requisição deverá seguir o padrão abaixo:</summary>
 
-```
+```json
 {
   "name": "ProdutoX"
 }
@@ -129,7 +129,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 201:</summary>
 
-```
+```json
 {
   "id": 4,
   "name": "ProdutoX"
@@ -153,7 +153,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A estrutura do <code>body</code> da requisição deverá seguir o padrão abaixo:</summary>
 
-```
+```json
 {
   "name": "Martelo do Batman"
 }
@@ -164,7 +164,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
 
-```
+```json
 {
   "id": 1,
   "name": "Martelo do Batman"
@@ -204,7 +204,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
 
-```
+```json
 // GET /products/search?q=Martelo
 
 [
@@ -227,7 +227,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
   
-```
+```json
 [
   {
     "saleId": 1,
@@ -261,7 +261,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
   
-```
+```json
 [
   {
     "productId": 1,
@@ -287,7 +287,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A estrutura do <code>body</code> da requisição deverá seguir o padrão abaixo:</summary>
 
-```
+```json
 [
   {
     "productId": 1,
@@ -305,7 +305,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 201:</summary>
   
-```
+```json
 {
   "id": 3,
   "itemsSold": [
@@ -340,7 +340,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A estrutura do <code>body</code> da requisição deverá seguir o padrão abaixo:</summary>
 
-```
+```json
 [
   {
     "productId": 1,
@@ -358,7 +358,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <details>
   <summary>A resposta da requisição é a seguinte, com status 200:</summary>
   
-```
+```json
 "saleId": 1,
   "itemsUpdated": [
     {
