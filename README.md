@@ -186,9 +186,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 | -------- | ------------------------------------------------------------------- | ---------------------------------- |
 | `DELETE` | Remove um produto do banco de dados (substitua `:id` por um número) | http://localhost:3000/products/:id |
 
-<details>
-  <summary>A rota retorna o status 204, <code>sem resposta</code>.</summary>
-</details>
+A rota retorna o status 204, <code>sem resposta</code>.
 
 <details>
   <summary>A requisição irá falhar nos seguintes casos:</summary>
@@ -388,9 +386,7 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 | -------- | ------------------------------------------------------------------ | ------------------------------- |
 | `DELETE` | Remove uma venda do banco de dados (substitua `:id` por um número) | http://localhost:3000/sales/:id |
 
-<details>
-  <summary>A rota retorna o status 204, <code>sem resposta</code>.</summary>
-</details>
+A rota retorna o status 204, <code>sem resposta</code>.
 
 <details>
   <summary>A requisição irá falhar nos seguintes casos:</summary>
