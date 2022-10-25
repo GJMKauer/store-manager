@@ -384,8 +384,8 @@ Também foi utilizado o conceito de middlewares para validação das requisiçõ
 <br>
 <br>
 
-| Método   | Funcionalidade                                                      | URL                                |
-| -------- | ------------------------------------------------------------------- | ---------------------------------- |
+| Método   | Funcionalidade                                                     | URL                             |
+| -------- | ------------------------------------------------------------------ | ------------------------------- |
 | `DELETE` | Remove uma venda do banco de dados (substitua `:id` por um número) | http://localhost:3000/sales/:id |
 
 <details>
